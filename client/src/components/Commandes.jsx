@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function Followers() {
+function Commandes() {
   const [idUtilisateur, setIdUtilisateur] = useState('');
-  const [followers, setFollowers] = useState('');
+  const [commandes, setCommandes] = useState('');
   const [timeReqAdd,setTimeReqAdd]=useState();
   const [timeReqDel,setTimeReqDel]=useState();
   /*useEffect(() => {
@@ -27,17 +27,17 @@ function Followers() {
 
   const handleClick = async () => {
     let beforeReq=Date.now();
-    await axios.get(`http://localhost:3001/followers/${idUtilisateur}`)
+    await axios.get(`http://localhost:3001/commandes/${idUtilisateur}`)
       .then(response => {
         let afterReq=Date.now();
         let timeReq=afterReq-beforeReq;
-        const followers = response.data;
-        console.log(followers);
-        setFollowers(
+        const commandes = response.data;
+        console.log(commandes);
+        setCommandes(
           <ul>
-          {followers.map((item) => (
+          {commandes.map((item) => (
             <li>
-              id_utilisateur: <b>{item.id_utilisateur}</b>, id_follower:<b>{item.id_follower}</b>
+              id_utilisateur: <b>{item.id_utilisateur}</b>, id_produit:<b>{item.id_produit}</b>
             </li>            
           ))}
           <p>temps de la requête: <b>{timeReq} ms</b></p>
@@ -51,7 +51,7 @@ function Followers() {
 
   const handleClick2 = async () => {
     let beforeReq=Date.now();
-    await axios.post(`http://localhost:3001/followers/add`)
+    await axios.post(`http://localhost:3001/commandes/add`)
       .then(response => {
         let afterReq=Date.now();
         setTimeReqAdd(afterReq-beforeReq);
@@ -64,7 +64,7 @@ function Followers() {
 
   const handleClick3 = async () => {
     let beforeReq=Date.now();
-    await axios.delete(`http://localhost:3001/followers/delete`)
+    await axios.delete(`http://localhost:3001/commandes/delete`)
       .then(response => {
         let afterReq=Date.now();
         setTimeReqDel(afterReq-beforeReq);
@@ -78,16 +78,16 @@ function Followers() {
 
   return (
     <div>
-      <h1>Liste des followers</h1>
+      <h1>Liste des commandes</h1>
       <label>
         ID de l'utilisateur : 
         <input type="text" value={idUtilisateur} onChange={(event) => setIdUtilisateur(event.target.value)} />
       </label>
-      <p><button onClick={handleClick}>Afficher les followers de l'utilisateurs</button> {followers ? followers : <b>Aucun followers à afficher.</b>}</p>
-      <p><button onClick={handleClick2}>Insérer followers</button> temps de la requête: <b>{timeReqAdd} ms</b>(attention ça met minimum 7 minutes pour 10 000 utilisateurs)</p>
-      <p><button onClick={handleClick3}>Supprimer la table followers</button> temps de la requête: <b>{timeReqDel} ms</b></p>
+      <p><button onClick={handleClick}>Afficher les commandes de l'utilisateurs</button> {commandes ? commandes : <b>Aucun commandes à afficher.</b>}</p>
+      <p><button onClick={handleClick2}>Insérer commandes</button> temps de la requête: <b>{timeReqAdd} ms</b></p>
+      <p><button onClick={handleClick3}>Supprimer la table commandes</button> temps de la requête: <b>{timeReqDel} ms</b></p>
     </div>
   );
 }
 
-export default Followers;
+export default Commandes;

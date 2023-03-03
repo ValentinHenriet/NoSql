@@ -6,49 +6,48 @@ const router = express.Router();
 const app = require('../index');
 //const pool = app.get('pool');
 
-// Récupération de tous les utilisateurs
+// Récupération de tous les produits
 router.get('/', async (req, res) => {
   try {
     const pool = req.app.locals.pool;
-    const result = await pool.query('SELECT * FROM utilisateurs');
+    const result = await pool.query('SELECT * FROM produits');
     res.send(result.rows);
   } catch (err) {
-    console.error("Erreur pour Récupération de tous les utilisateurs");
+    console.error("Erreur pour Récupération de tous les produits");
     console.error(err);
     res.status(500).send('Erreur serveur');
   }
 });
 
-// Récupération d'un utilisateur par son id
+// Récupération d'un produits par son id
 router.get('/:id', async (req, res) => {
   const id = req.params.id;
   console.log(id);
   try {
     const pool = req.app.locals.pool;
-    const result = await pool.query('SELECT * FROM utilisateurs WHERE id_utilisateur = $1', [id]);
+    const result = await pool.query('SELECT * FROM produits WHERE id_produit = $1', [id]);
     if (result.rowCount > 0) {
       res.send(result.rows[0]);
     } else {
-      res.status(404).send('Utilisateur non trouvé');
+      res.status(404).send('Produit non trouvé');
     }
   } catch (err) {
-    console.error("Erreur pour Récupération d'un utilisateur par son id");
+    console.error("Erreur pour recherche d'un produit par son id");
     console.error(err);
     res.status(500).send('Erreur serveur');
   }
 });
 
 router.post("/add", async (req, res) => {
-  console.log("in add utilisateurs");
+  console.log("in add produits");
   try {
     const pool = req.app.locals.pool;
-    const result = await pool.query(`INSERT INTO utilisateurs (nom) 
-    SELECT substr(md5(random()::text),1,10) 
-    FROM generate_series(1,10000)`);
-    console.log("finish");
+    const result = await pool.query(`insert into produits(nom_produit)
+    select substr(md5(random()::text),1,10)
+    from generate_series(1,100)`);
     res.send(result);
   } catch (err) {
-    console.error("Erreur pour insertion de 10 000 utilisateurs par son id");
+    console.error("Erreur pour insertion de 100 produits par son id");
     console.error(err);
     res.status(500).send('Erreur serveur');
   }
@@ -56,15 +55,14 @@ router.post("/add", async (req, res) => {
 
 router.delete("/delete", async (req, res) => {
   try {
-    console.log("in delete utilisateurs");
+    console.log("in delete produits");
     const pool = req.app.locals.pool;
-    const result = await pool.query(`    
-    DELETE FROM utilisateurs
+    const result = await pool.query(`
+    DELETE FROM produits
     `);
-    console.log("finish delete utilisateurs")
     res.send(result);
   } catch (err) {
-    console.error("Erreur pour delete utilisateurs");
+    console.error("Erreur pour delete produits");
     console.error(err);
     res.status(500).send('Erreur serveur');
   }
