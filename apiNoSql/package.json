@@ -1,0 +1,24 @@
+{
+  "name": "nosql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ApiNoSql.js",
+  "scripts": {
+    "start": "node ApiNoSql.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ValentinHenriet/NoSql.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ValentinHenriet/NoSql/issues"
+  },
+  "homepage": "https://github.com/ValentinHenriet/NoSql#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "neo4j-driver": "^5.5.0"
+  }
+}

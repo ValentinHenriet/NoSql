@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { publicRequest } from "../requestMethods";
 
 function Circles2() {
     const [id, setId] = useState("");

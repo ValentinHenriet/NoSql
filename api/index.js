@@ -4,7 +4,6 @@ const { Pool } = require('pg');
 const cors = require('cors');
 const utilisateursRoutes = require('./routes/utilisateurs');
 const requeteInfluenceRoot=require('./routes/requeteInfluence');
-
 // Configuration de la base de données
 const pool = new Pool({
   user: 'postgres',
@@ -27,7 +26,6 @@ app.use(cors());
 // Configuration des routes liées aux utilisateurs
 app.use('/utilisateurs', utilisateursRoutes);
 app.use('/requeteInfluence', requeteInfluenceRoot);
-
 // Démarrage du serveur
 app.listen(3001, () => console.log('Serveur démarré sur le port 3001'));
 
