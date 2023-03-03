@@ -5,7 +5,7 @@ function Circles3() {
     const [niveau, setNiveau] = useState("");
     const [idProduit, setIdProduit] = useState("");
     const [result, setResult] = useState([]);
-  
+    const [timeReq,setTimeReq]=useState();
     const handleSubmit = async (event) => {
       event.preventDefault();
       
@@ -15,10 +15,13 @@ function Circles3() {
         niveau:niveau
       })*/
       console.log(niveau);
-      console.log(idProduit)
+      console.log(idProduit);
+      let beforeReq=Date.now();
       axios.get(`http://localhost:3001/requeteInfluence/circles3?niveau=${niveau}&idProduit=${idProduit}`)
       .then(response => {
         //const data = await response.json();
+        let afterReq=Date.now();
+        setTimeReq(afterReq-beforeReq);
         console.log(response);
         console.log(response.data);
         setResult(response.data);
@@ -31,6 +34,7 @@ function Circles3() {
   
     return (
       <div>
+        <h1>Requête 3</h1>
         <form onSubmit={handleSubmit}>
           <label>
             Niveau :
@@ -53,10 +57,11 @@ function Circles3() {
         <ul>
           {result.map((item) => (
             <li>
-              ID produit: {item.id_produit}, Nombre de personnes:{" "}
-              {item.nombre_personnes}
+              ID produit: <b>{item.id_produit}</b>, Nombre de personnes:{" "}
+              <b>{item.nombre_personnes}</b>
             </li>
           ))}
+          <p>temps de la requête: <b>{timeReq} ms</b></p>
         </ul>
       </div>
     );

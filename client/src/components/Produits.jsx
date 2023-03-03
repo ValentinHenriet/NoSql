@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function Utilisateurs() {
-  const [idUtilisateur, setIdUtilisateur] = useState('');
-  const [utilisateurs, setUtilisateurs] = useState('');
+function Produits() {
+  const [idProduit, setIdProduit] = useState('');
+  const [produit, setProduit] = useState('');
   const [timeReqAdd,setTimeReqAdd]=useState();
   const [timeReqDel,setTimeReqDel]=useState();
   /*useEffect(() => {
@@ -27,14 +27,14 @@ function Utilisateurs() {
 
   const handleClick = async () => {
     let beforeReq=Date.now();
-    await axios.get(`http://localhost:3001/utilisateurs/${idUtilisateur}`)
+    await axios.get(`http://localhost:3001/produits/${idProduit}`)
       .then(response => {
         let afterReq=Date.now();
         let timeReq=afterReq-beforeReq;
-        const utilisateur = response.data;
-        setUtilisateurs(
+        const produit = response.data;
+        setProduit(
           <ul>
-            nom: <b>{utilisateur.nom}</b> temps de la requête: <b>{timeReq} ms</b>
+            nom_produit:<b>{produit.nom_produit}</b> temps de la requête: <b>{timeReq} ms</b>
           </ul>          
         );
       })
@@ -45,7 +45,7 @@ function Utilisateurs() {
 
   const handleClick2 = async () => {
     let beforeReq=Date.now();
-    await axios.post(`http://localhost:3001/utilisateurs/add`)
+    await axios.post(`http://localhost:3001/produits/add`)
       .then(response => {
         let afterReq=Date.now();
         setTimeReqAdd(afterReq-beforeReq);
@@ -58,7 +58,7 @@ function Utilisateurs() {
 
   const handleClick3 = async () => {
     let beforeReq=Date.now();
-    await axios.delete(`http://localhost:3001/utilisateurs/delete`)
+    await axios.delete(`http://localhost:3001/produits/delete`)
       .then(response => {
         let afterReq=Date.now();
         setTimeReqDel(afterReq-beforeReq);
@@ -71,16 +71,16 @@ function Utilisateurs() {
 
   return (
     <div>
-      <h1>Liste des utilisateurs</h1>
+      <h1>Liste des produits</h1>
       <label>
-        ID de l'utilisateur : 
-        <input type="text" value={idUtilisateur} onChange={(event) => setIdUtilisateur(event.target.value)} />
+        ID du produit : 
+        <input type="text" value={idProduit} onChange={(event) => setIdProduit(event.target.value)} />
       </label>
-      <p><button onClick={handleClick}>Afficher l'utilisateur</button>{utilisateurs ? utilisateurs : <b>Aucun utilisateur à afficher.</b>}</p>
-      <p><button onClick={handleClick2}>Insérer 10 000 utilisateurs</button> temps de la requête: <b>{timeReqAdd} ms</b></p>
-      <p><button onClick={handleClick3}>Supprimer l'ensemble des utilisateurs</button> temps de la requête: <b>{timeReqDel} ms</b></p>
+      <p><button onClick={handleClick}>Afficher le nom du produit</button> {produit ? produit : <b>Aucun produit à afficher.</b>}</p>
+      <p><button onClick={handleClick2}>Insérer 100 produits</button> temps de la requête: <b>{timeReqAdd} ms</b></p>
+      <p><button onClick={handleClick3}>Supprimer l'ensemble des produits</button> temps de la requête: <b>{timeReqDel} ms</b></p>
     </div>
   );
 }
 
-export default Utilisateurs;
+export default Produits;
